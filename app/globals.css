@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-roboto-flex: 'Roboto Flex', sans-serif;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply bg-black text-white font-thin;
+    font-family: var(--font-roboto-flex);
+  }
+}
+
+@layer utilities {
+  .section-number {
+    @apply text-9xl md:text-[12rem] lg:text-[15rem] font-thin opacity-20 select-none;
+    line-height: 0.8;
+  }
+}
