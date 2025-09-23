@@ -1,9 +1,12 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { ArrowRight, X } from 'lucide-react';
 
 export default function Home() {
   const [scrollY, setScrollY] = useState(0);
+  const [open, setOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState<number | null>(null)
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
@@ -11,104 +14,127 @@ export default function Home() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+  }, [open]);
+
   return (
-    <main className="bg-black text-white min-h-screen">
+    <main className="bg-black text-white min-h-screen relative overflow-hidden">
       {/* Hero Section */}
-      <section className="h-screen flex items-center justify-center relative overflow-hidden">
-        <div className="text-center z-10">
-          <h1 
-            className="text-4xl md:text-6xl lg:text-8xl xl:text-9xl font-thin tracking-widest mb-4 transition-all duration-1000"
-            style={{
-              transform: `translateY(${scrollY * 0.5}px)`,
-              opacity: Math.max(0, 1 - scrollY / 800)
-            }}
-          >
-            SILVER SURFER
-          </h1>
-          <p 
-            className="text-lg md:text-xl lg:text-2xl font-thin opacity-60 tracking-wide"
+      <section className="h-screen flex items-center justify-center flex-col relative overflow-hidden">
+        <div className="flex items-baseline justify-start mr-80">
+          <h1 className="title"> Silver Surfer </h1>
+          <div className="rounded-full bg-white h-10 w-10 flex"></div>
+        </div>
+        <div className="max-w-screen-md p-6">
+          <p
+            className="text-md md:text-base tracking-tighter lg:text-2xl font-thin opacity-60"
             style={{
               transform: `translateY(${scrollY * 0.3}px)`,
-              opacity: Math.max(0, 0.6 - scrollY / 1000)
+              opacity: Math.max(0, 0.6 - scrollY / 1000),
             }}
           >
-            Herald of Galactus, Rider of the Cosmic Waves
+            Your partner for bold, results-driven online marketing. We help
+            brands grow, connect with their audience, and stand out in the
+            digital world.
           </p>
-        </div>
-        
-        {/* Subtle background pattern */}
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-white rounded-full animate-pulse"></div>
-          <div className="absolute top-3/4 right-1/4 w-1 h-1 bg-white rounded-full animate-pulse delay-500"></div>
-          <div className="absolute top-1/2 right-1/3 w-1.5 h-1.5 bg-white rounded-full animate-pulse delay-1000"></div>
         </div>
       </section>
 
       {/* Section 1 */}
-      <section className="h-screen flex items-center relative">
-        <div className="absolute left-8 md:left-16 lg:left-24 top-1/2 transform -translate-y-1/2">
-          <span className="section-number">1</span>
-        </div>
-        <div className="max-w-4xl mx-auto px-8 md:px-16 lg:px-24 ml-auto">
-          <div className="space-y-8">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-thin mb-8">
-              The Power Cosmic
-            </h2>
-            <div className="space-y-6 text-lg md:text-xl lg:text-2xl font-thin opacity-80 leading-relaxed">
-              <p>
-                Once mortal, Norrin Radd sacrificed everything to save his homeworld Zenn-La from the cosmic devourer, Galactus.
-              </p>
-              <p>
-                Transformed by the Power Cosmic, he became the Silver Surfer—a being of immense power, soaring through the cosmos on his quantum surfboard.
-              </p>
+      <section className="min-h-screen flex flex-col py-48 ml-28 relative">
+        <div className="flex items-baseline flex-row gap-6">
+          <span className="no">1</span>
+          <div className="rounded-full bg-white h-14 w-14"></div>
+
+          <div className="flex flex-col">
+            <div className="flex items-center gap-4">
+              <h2 className="header">Discovery</h2>
+              <button onClick={() => setActiveSection(1)}
+                className="ml-4 p-3 rounded-full bg-white text-black hover:bg-gray-200 transition">
+                <ArrowRight size={28} />
+              </button>
             </div>
+            <p className="mt-6 text-md md:text-base tracking-tighter lg:text-2xl font-thin opacity-60">
+              You deep dive into our past Projects and get to know us.
+            </p>
           </div>
         </div>
       </section>
 
-      {/* Section 2 */}
-      <section className="h-screen flex items-center relative">
-        <div className="absolute left-8 md:left-16 lg:left-24 top-1/2 transform -translate-y-1/2">
-          <span className="section-number">2</span>
+      {/* Slider 1 */}
+      <div
+        className={`fixed inset-0 bg-white text-black transform transition-transform duration-500 z-50 overflow-y-auto ${
+          activeSection === 1 ? 'translate-x-0' : 'translate-x-full'
+        }`}
+      >
+        <button
+          onClick={() => setActiveSection(null)}
+          className="absolute top-6 right-6 text-2xl"
+        >
+          <X size={32} />
+        </button>
+
+        <div className="p-12 space-y-8 max-w-3xl mx-auto">
+          <h2 className="text-4xl font-bold">More about Discovery</h2>
+          <p className="text-lg leading-relaxed">
+         ni
+          </p>
+          <p className="text-lg leading-relaxed">
+             You deep dive into our past Projects and get to know us.
+          </p>
+          <p className="text-lg leading-relaxed">
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Assumenda unde rerum recusandae. Fuga quam beatae magni hic debitis mollitia et, eos temporibus dolor ratione vel non in aperiam molestias commodi!
+          </p>
         </div>
-        <div className="max-w-4xl mx-auto px-8 md:px-16 lg:px-24 ml-auto">
-          <div className="space-y-8">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-thin mb-8">
-              Cosmic Guardian
-            </h2>
-            <div className="space-y-6 text-lg md:text-xl lg:text-2xl font-thin opacity-80 leading-relaxed">
-              <p>
-                Breaking free from his master's service, the Silver Surfer became a protector of life throughout the universe.
-              </p>
-              <p>
-                With abilities that defy comprehension—matter manipulation, energy projection, and faster-than-light travel—he stands as one of the cosmos' mightiest defenders.
-              </p>
+      </div>
+
+
+       {/* Section 2 */}
+      <section className="min-h-screen flex flex-col py-48 ml-28 relative">
+        <div className="flex items-baseline flex-row gap-6">
+          <span className="no">2</span>
+          <div className="rounded-full bg-white h-14 w-14"></div>
+
+          <div className="flex flex-col">
+            <div className="flex items-center gap-4">
+              <h2 className="header">Social Proof</h2>
+              <button onClick={() => setActiveSection(2)}
+                className="ml-4 p-3 rounded-full bg-white text-black hover:bg-gray-200 transition">
+                <ArrowRight size={28} />
+              </button>
             </div>
+            <p className="mt-6 text-md md:text-base tracking-tighter lg:text-2xl font-thin opacity-60">
+              You deep dive into our past Projects and get to know us.
+            </p>
           </div>
         </div>
       </section>
 
-      {/* Section 3 - Additional section for visual balance */}
-      <section className="h-screen flex items-center relative">
-        <div className="absolute left-8 md:left-16 lg:left-24 top-1/2 transform -translate-y-1/2">
-          <span className="section-number">3</span>
+      {/* Slider 2 */}
+      <div
+        className={`fixed inset-0 bg-white text-black transform transition-transform duration-500 z-50 overflow-y-auto ${
+          activeSection === 2 ? 'translate-x-0' : 'translate-x-full'
+        }`}
+      >
+        <button
+          onClick={() => setActiveSection(null)}
+          className="absolute top-6 right-6 text-2xl"
+        >
+          <X size={32} />
+        </button>
+
+        <div className="p-12 space-y-8 max-w-3xl mx-auto">
+          <h2 className="text-4xl font-bold">Kirb</h2>
+          <p className="text-lg leading-relaxed">
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Asperiores natus tempora sed consequuntur molestias amet saepe quibusdam sapiente voluptatem, dolores praesentium eligendi similique ad molestiae labore a assumenda obcaecati nostrum.
+          </p>
         </div>
-        <div className="max-w-4xl mx-auto px-8 md:px-16 lg:px-24 ml-auto">
-          <div className="space-y-8">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-thin mb-8">
-              Endless Journey
-            </h2>
-            <div className="space-y-6 text-lg md:text-xl lg:text-2xl font-thin opacity-80 leading-relaxed">
-              <p>
-                Through endless galaxies and infinite realities, the Silver Surfer continues his eternal vigil.
-              </p>
-              <p>
-                A solitary figure against the cosmic dark, forever seeking redemption, purpose, and the preservation of life in all its forms.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+      </div>
     </main>
   );
 }

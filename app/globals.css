@@ -3,21 +3,54 @@
 @tailwind utilities;
 
 :root {
-  --font-roboto-flex: 'Roboto Flex', sans-serif;
+  --font-roboto-flex: "Roboto Flex", sans-serif;
 }
 
 @layer base {
   * {
     @apply border-border;
   }
-  
+
   html {
     scroll-behavior: smooth;
   }
-  
+
   body {
     @apply bg-black text-white font-thin;
     font-family: var(--font-roboto-flex);
+  }
+
+  .title {
+    font-family: "Roboto Flex", sans-serif;
+    font-style: normal;
+    letter-spacing: -0.06em;
+    font-weight: 50;
+    font-size: 20vh;
+    line-height: 15vh;
+
+    color: #ffffff;
+  }
+
+  .no {
+    font-family: "Roboto Serif", serif;
+    font-style: normal;
+    font-weight: 900;
+    letter-spacing: -0.07em;
+    font-size: 50vh;
+    line-height: 40vh;
+
+    color: #ffffff;
+  }
+
+  .header {
+    font-family: "Roboto Flex" sans-serif;
+    font-style: normal;
+    letter-spacing: -0.06em;
+    font-weight: 100;
+    font-size: 27vh;
+    line-height: 30vh;
+
+    color: #ffffff;
   }
 }
 
