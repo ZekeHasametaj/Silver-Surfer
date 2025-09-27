@@ -15,31 +15,38 @@ export default function Home() {
     { id: 'section2', label: 'Social Proof' },
     { id: 'section3', label: 'Value' },
     { id: 'section4', label: 'Closing' },
+    { id: 'footer', label: 'Footer' },
   ];
 
-
   useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
-    window.addEventListener('scroll', handleScroll);
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
 
-    let current = 'title';
-    sections.forEach((sec) => {
-      const el = document.getElementById(sec.id);
-      if (el) {
-        const rect = el.getBoundingClientRect();
-        if (
-          rect.top <= window.innerHeight / 2 &&
-          rect.bottom >= window.innerHeight / 2
-        ) {
-          current = sec.id;
+      let current = 'title';
+      sections.forEach((sec) => {
+        const el = document.getElementById(sec.id);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          if (sec.id === "footer") {
+            if (rect.top <= window.innerHeight) {
+              current = sec.id;
+            }
+          } else {
+            if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
+              current = sec.id;
+            }
+          }
         }
-      }
-    });
-    setCurrentSection(current);
+      });
+      setCurrentSection(current);
+    };
 
+    window.addEventListener('scroll', handleScroll);
+    handleScroll();
 
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [sections]);
+
 
   const scrollToSection = (id: string) => {
     const el = document.getElementById(id);
@@ -59,19 +66,26 @@ export default function Home() {
   return (
     <main className="bg-black text-white min-h-screen relative overflow-hidden">
       {/* Side Nav */}
-      <div className='fixed right-10 top-1/2 -translate-y-1/2 flex flex-col items-center space-y-12 z-50'>
+      <div className='fixed right-14 top-1/2 -translate-y-1/2 flex flex-col items-center z-50'>
+        {currentSection !== 'title' && (
+          <div className="absolute top-0 bottom-0 w-0.5 bg-gray-600" />
+        )}
         <div className='absolute top-0 bottom-0 w-0.5 bg-gray-600'>
-          {sections.map((sec) => (
-            <button key={sec.id} onClick={() => scrollToSection(sec.id)} className={`relative z-10 w-6 h-6 rounded-full border-2 transition 
+          {sections.map((sec, index) => (
+            <button key={sec.id} onClick={() => scrollToSection(sec.id)} className={`relative z-20 w-10 h-10 rounded-full border-2 transition 
             ${currentSection === sec.id ? 'bg-white border-white border-double' : 'border-gray-400 hover:border-white'}`}
-              aria-label={sec.label} />
+              aria-label={sec.label}>
+              {(sec.id !== 'title' && sec.id !== 'footer') && (
+                index
+              )}
+            </button>
           ))}
         </div>
       </div>
 
 
       {/* Title Section */}
-      <section className="h-screen flex items-center justify-center flex-col relative overflow-hidden">
+      <section id='title' className="h-screen flex items-center justify-center flex-col relative overflow-hidden">
         <div className="flex items-baseline justify-start mr-80">
           <h1 className="title"> Silver Surfer </h1>
           <div className="rounded-full bg-white h-10 w-10 flex"></div>
@@ -92,7 +106,7 @@ export default function Home() {
       </section>
 
       {/* Section 1 */}
-      <section className="h-screen flex flex-col py-48 ml-28 relative">
+      <section id='section1' className="h-screen flex flex-col py-48 ml-28 relative">
         <div className="flex items-baseline flex-row gap-6">
           <span className="no">1</span>
           <div className="rounded-full bg-white h-14 w-14"></div>
@@ -140,7 +154,7 @@ export default function Home() {
 
 
       {/* Section 2 */}
-      <section className="h-screen flex flex-col py-48 ml-28 relative">
+      <section id='section2' className="h-screen flex flex-col py-48 ml-28 relative">
         <div className="flex items-baseline flex-row gap-6">
           <span className="no">2</span>
           <div className="rounded-full bg-white h-14 w-14"></div>
@@ -179,7 +193,7 @@ export default function Home() {
         </div>
       </div>
       {/* Section 3 */}
-      <section className="h-screen flex flex-col py-48 ml-28 relative">
+      <section id='section3' className="h-screen flex flex-col py-48 ml-28 relative">
         <div className="flex items-baseline flex-row gap-6">
           <span className="no">3</span>
           <div className="rounded-full bg-white h-14 w-14"></div>
@@ -219,7 +233,7 @@ export default function Home() {
       </div>
 
       {/* Section 4 */}
-      <section className="h-screen flex flex-col py-48 ml-28 relative">
+      <section id='section4' className="h-screen flex flex-col py-48 ml-28 relative">
         <div className="flex items-baseline flex-row gap-6">
           <span className="no">4</span>
           <div className="rounded-full bg-white h-14 w-14"></div>
@@ -259,7 +273,7 @@ export default function Home() {
       </div>
 
 
-      <footer className="flex flex-col text-sm text-gray-400 mt-32">
+      <footer id='footer' className="flex flex-col text-sm text-gray-400 mt-32 pb-4">
         <div className="h-px w-full bg-white opacity-20 mb-12"></div>
         <div className="max-w-6xl mx-auto w-full flex flex-col md:flex-row justify-between items-start gap-12 px-6">
           <div className="space-y-3">
