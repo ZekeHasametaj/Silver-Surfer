@@ -23,11 +23,17 @@
   .title {
     font-family: "Roboto Flex", sans-serif;
     font-style: normal;
-    letter-spacing: -0.06em;
     font-weight: 50;
     font-size: 20vh;
     line-height: 15vh;
 
+    color: #ffffff;
+  }
+
+  .header {
+    font-size: clamp(1.5rem, 15vw, 8rem);
+    line-height: 1.1;
+    white-space: nowrap;
     color: #ffffff;
   }
 
@@ -42,21 +48,30 @@
     color: #ffffff;
   }
 
-  .header {
-    font-family: "Roboto Flex" sans-serif;
-    font-style: normal;
-    letter-spacing: -0.06em;
+  .paragraph {
+    font-size: clamp(1rem, 3vw, 1.5rem);
     font-weight: 100;
-    font-size: 27vh;
-    line-height: 35vh;
-
-    color: #ffffff;
+    opacity: 0.6; 
+    line-height: 1.375;
+    margin-top: 1rem;
   }
-}
 
-@layer utilities {
-  .section-number {
-    @apply text-9xl md:text-[12rem] lg:text-[15rem] font-thin opacity-20 select-none;
-    line-height: 0.8;
+  @media (min-width: 768px) {
+    .paragraph {
+      font-size: 1rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .paragraph {
+      font-size: 1.5rem;
+    }
+  }
+
+  @layer utilities {
+    .section-number {
+      @apply text-9xl md:text-[12rem] lg:text-[15rem] font-thin opacity-20 select-none;
+      line-height: 0.8;
+    }
   }
 }
