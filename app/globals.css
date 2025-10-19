@@ -25,9 +25,8 @@
     font-style: normal;
     font-weight: 50;
     font-size: 20vh;
-    line-height: 15vh;
-
     color: #ffffff;
+    line-height: 1rem;
   }
 
   .header {
@@ -42,7 +41,7 @@
     font-style: normal;
     font-weight: 900;
     letter-spacing: -0.07em;
-    font-size: 50vh;
+    font-size: 40vh;
     line-height: 40vh;
 
     color: #ffffff;
@@ -51,7 +50,7 @@
   .paragraph {
     font-size: clamp(1rem, 3vw, 1.5rem);
     font-weight: 100;
-    opacity: 0.6; 
+    opacity: 0.6;
     line-height: 1.375;
     margin-top: 1rem;
   }
@@ -72,6 +71,30 @@
     .section-number {
       @apply text-9xl md:text-[12rem] lg:text-[15rem] font-thin opacity-20 select-none;
       line-height: 0.8;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .title {
+      line-height: 1.1;
+      text-align: left;
+    }
+
+    .no {
+      font-size: 20vh;
+      line-height: 20vh;
+    }
+
+    .header {
+      font-size: 10vw;
+      white-space: normal;
+      text-align: center;
+    }
+
+    .paragraph {
+      text-align: center;
+      margin: 0 auto;
+      font-size: 1rem;
     }
   }
 }
