@@ -10,11 +10,11 @@ export default function Home() {
   const [activeSection, setActiveSection] = useState<number | null>(null);
 
   const sections = [
-    { id: 'title', label: 'Title' },
-    { id: 'section1', label: 'Discovery' },
-    { id: 'section2', label: 'Social Proof' },
-    { id: 'section3', label: 'Value' },
-    { id: 'section4', label: 'Closing' },
+    { id: 'title', label: 'Start' },
+    { id: 'section1', label: 'Über Uns' },
+    { id: 'section2', label: 'Leistungen' },
+    { id: 'section3', label: 'Oft gestellte Fragen' },
+    { id: 'section4', label: 'Referenzen' },
     { id: 'footer', label: 'Footer' },
   ];
 
@@ -60,14 +60,10 @@ export default function Home() {
     <main className="bg-black text-white min-h-screen relative overflow-hidden">
 
       {/* nav */}
-      <div
-        className="
-           fixed z-50
-    right-0 left-0 md:right-14 md:left-auto
-    top-4 md:top-1/2 md:-translate-y-1/2 md:bottom-auto
-    flex md:flex-col flex-row items-center justify-center gap-6
-        "
-      >
+      <h1 className='fixed bg-black rounded z-50 font-bold title text-4xl top-10 left-10'>Silver Surfer.</h1>
+      <div className="fixed z-50 right-0 left-0 md:right-10 md:left-auto top-14 md:top-14 md:-translate-y-1/2
+        flex flex-row items-center justify-center gap-2 px-3 py-2 rounded-3xl backdrop-blur-2xl 
+      bg-white/10 border border-white/20 shadow-[0_8px_30px_rgb(0_0_0_/_0.12)]">
         {sections.map((sec, index) => {
           const isActive = currentSection === sec.id;
           const isPast =
@@ -77,17 +73,11 @@ export default function Home() {
             <div key={sec.id} className="relative flex flex-col items-center">
               <button
                 onClick={() => scrollToSection(sec.id)}
-                className={`relative z-20 w-8 h-8 md:w-10 md:h-10 rounded-full transition
-                  ${isActive ? 'bg-white' : 'bg-transparent'}
-                  ${sec.id === 'title'
-                    ? 'border-2 border-white after:content-[""] after:absolute after:inset-[-6px] after:rounded-full after:border-2 after:border-white after:z-[-1]'
-                    : isActive
-                      ? 'border-2 border-white'
-                      : 'border-2 border-gray-400 hover:border-white'
-                  }`}
+                className={`relative z-20 py-1 px-3 rounded-3xl transition
+                  ${isActive ? 'lg-button-selected bg-black' : 'lg-button'}`}
                 aria-label={sec.label}
               >
-                {(sec.id !== 'title' && sec.id !== 'footer') && index}
+                {sec.label}
               </button>
             </div>
           );
@@ -98,50 +88,39 @@ export default function Home() {
       <section
         id="title"
         className="h-screen flex flex-col items-center justify-center text-center px-6 relative overflow-hidden">
-        <div className="flex flex-row md:flex-row items-end md:items-start justify-start gap-6 md:mr-80">
-          <h1 className="title text-[clamp(2rem,27vw,7rem)] font-bold break-words">
-            Silver Surfer
+        <div className="flex flex-row md:flex-col items-end md:items-start justify-start gap-3 md:mr-80">
+          <h1 className="title text-[clamp(1.5rem,20vw,5rem)] text-left break-words">
+            Mehr Kunden. <br />
+            Weniger Aufwand.
           </h1>
-          <div className="rounded-full bg-white h-10 w-10 flex shrink-0 mb-5"></div>
-        </div>
-
-
-        <div className="max-w-screen-md p-6">
-          <p
-            className="paragraph mt-0"
-            style={{
-              transform: `translateY(${scrollY * 0.3}px)`,
-              opacity: Math.max(0, 0.6 - scrollY / 1000),
-            }}
-          >
-            Your partner for bold, results-driven online marketing. We help
-            brands grow, connect with their audience, and stand out in the
-            digital world.
+          <p className="paragraph mt-0">
+            Webseiten  • Ads • Automatisierungen • KI Agenten • Content Creation
           </p>
+          <button className="mt-4 px-5 py-2 bg-white/10 backdrop-blur-xl border border-white/20 rounded-full text-white flex items-center gap-2 hover:bg-white/20 transition">
+            Beratung vereinbaren
+            <span className="text-xl">→</span>
+          </button>
+        </div>
+        <div className="flex items-end justify-end text-right self-stretch">
+          <h3 className="text-gray-300 leading-relaxed text-lg md:text-xl">
+            Digitale Lösungen & KI-Automationen, <br />
+            die Ihr Unternehmen skalieren.
+          </h3>
         </div>
       </section>
 
       {/* section 1 */}
-      <section
-        id="section1"
-        className="min-h-screen flex flex-col py-16 md:py-48 px-6 md:ml-28 relative text-center md:text-left"
-      >
-        <div className="flex flex-col md:flex-row items-center md:items-baseline gap-6 md:gap-12">
-          <div className="flex flex-row items-baseline gap-3">
-            <span className="no">1</span>
-            <div className="rounded-full bg-white h-12 w-12 md:h-14 md:w-14"></div>
-          </div>
-
+      <section id="section1" className="h-screen flex flex-col items-center justify-center text-center px-6 relative overflow-hidden">
+        <div className="flex flex-col md:flex-row items-center md:items-baseline gap-6 md:mr-80">
           <div className="flex flex-col max-w-md md:max-w-2xl">
-            <div className="flex flex-col md:flex-row md:items-center items-center gap-4 justify-center">
-              <h2 className="header">Discovery</h2>
-              <button onClick={() => setActiveSection(1)} className="mt-4 md:mt-0 md:ml-4 flex items-center justify-start md:justify-center gap-2 
-                w-[80vw] md:w-[44px] h-[40px] md:h-[44px] rounded-full 
-                bg-white text-black font-medium hover:bg-gray-200 transition px-4 md:px-0 min-w-[44px] md:min-w-[44px]">
-                <ArrowRight size={20} className="flex-shrink-0" />
+            <div className="flex flex-row md:flex-col items-end md:items-start justify-start gap-3 md:mr-80">
+              <h3 className="header">Über Uns</h3>
+              <button className="px-5 py-2 bg-white/10 backdrop-blur-xl border border-white/20 rounded-full text-white flex items-center gap-2 hover:bg-white/20 transition">
+                Beratung vereinbaren
+                <span className="text-xl">→</span>
               </button>
             </div>
-            <p className="paragraph">You deep dive into our past Projects and get to know us.</p>
+            <p className="paragraph text-left">You deep dive into our past Projects and get to know us.</p>
           </div>
         </div>
       </section>
