@@ -59,36 +59,35 @@ export default function Home() {
   return (
     <main className="bg-black text-white min-h-screen relative overflow-hidden">
 
-      {/* nav */}
-      <h1 className='fixed bg-black rounded z-50 font-bold title text-4xl top-10 left-10'>Silver Surfer.</h1>
-      <div className="fixed z-50 right-0 left-0 md:right-10 md:left-auto top-14 md:top-14 md:-translate-y-1/2
-        flex flex-row items-center justify-center gap-2 px-3 py-2 rounded-3xl backdrop-blur-2xl 
-      bg-white/10 border border-white/20 shadow-[0_8px_30px_rgb(0_0_0_/_0.12)]">
-        {sections.map((sec, index) => {
-          const isActive = currentSection === sec.id;
-          const isPast =
-            sections.findIndex((s) => s.id === currentSection) >= index;
+      {/* nav / header */}
+      <header className="fixed top-0 left-0 w-full z-50 bg-black/80 backdrop-blur-xl border-b border-white/10">
+        <div className="flex items-center justify-between px-6 py-3">
+          <h1 className="font-bold title text-4xl">Silver Surfer.</h1>
 
-          return (
-            <div key={sec.id} className="relative flex flex-col items-center">
-              <button
-                onClick={() => scrollToSection(sec.id)}
-                className={`relative z-20 py-1 px-3 rounded-3xl transition
-                  ${isActive ? 'lg-button-selected bg-black' : 'lg-button'}`}
-                aria-label={sec.label}
-              >
-                {sec.label}
-              </button>
-            </div>
-          );
-        })}
-      </div>
+          <div className="flex flex-row items-center gap-2 px-3 py-2 
+      rounded-3xl backdrop-blur-2xl bg-white/10 border border-white/20 shadow-lg">
+            {sections.map((sec) => {
+              const isActive = currentSection === sec.id;
+
+              return (
+                <button
+                  key={sec.id}
+                  onClick={() => scrollToSection(sec.id)}
+                  className={`py-1 px-3 rounded-3xl transition
+              ${isActive ? 'bg-black text-white' : 'text-white/80 hover:text-white'}`}
+                >
+                  {sec.label}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      </header>
+
 
       {/* title */}
-      <section
-        id="title"
-        className="h-screen flex flex-col items-center justify-center text-center px-6 relative overflow-hidden">
-        <div className="flex flex-row md:flex-col items-end md:items-start justify-start gap-3 md:mr-80">
+      <section id="title" className="h-screen flex flex-col items-center justify-center text-center px-6 relative overflow-hidden">
+        <div className="flex flex-row md:flex-col items-end md:items-start justify-start self-start w-2/3 pl-14 gap-3">
           <h1 className="title text-[clamp(1.5rem,20vw,5rem)] text-left break-words">
             Mehr Kunden. <br />
             Weniger Aufwand.
@@ -101,72 +100,75 @@ export default function Home() {
             <span className="text-xl">→</span>
           </button>
         </div>
-        <div className="flex items-end justify-end text-right self-stretch">
-          <h3 className="text-gray-300 leading-relaxed text-lg md:text-xl">
+        <div className="absolute bottom-12 right-10 text-right">
+          <h2 className="text-gray-300 leading-relaxed text-xl md:text-2xl">
             Digitale Lösungen & KI-Automationen, <br />
             die Ihr Unternehmen skalieren.
-          </h3>
+          </h2>
         </div>
       </section>
 
       {/* section 1 */}
       <section id="section1" className="h-screen flex flex-col items-center justify-center text-center px-6 relative overflow-hidden">
-        <div className="flex flex-col md:flex-row items-center md:items-baseline gap-6 md:mr-80">
-          <div className="flex flex-col max-w-md md:max-w-2xl">
-            <div className="flex flex-row md:flex-col items-end md:items-start justify-start gap-3 md:mr-80">
-              <h3 className="header">Über Uns</h3>
-              <button className="px-5 py-2 bg-white/10 backdrop-blur-xl border border-white/20 rounded-full text-white flex items-center gap-2 hover:bg-white/20 transition">
-                Beratung vereinbaren
-                <span className="text-xl">→</span>
-              </button>
-            </div>
-            <p className="paragraph text-left">You deep dive into our past Projects and get to know us.</p>
-          </div>
+        <div className="flex flex-row md:flex-col items-end md:items-start justify-start self-start w-2/3 pl-14 gap-3">
+          <h1 className="title text-[clamp(1.5rem,20vw,5rem)] text-left break-words">Über Uns</h1>
+          <button onClick={() => setActiveSection(1)}
+            className="px-5 py-2 bg-white/10 backdrop-blur-xl border border-white/20 rounded-full text-white flex items-center gap-2 hover:bg-white/20 transition">
+            Unser Team
+            <span className="text-xl">→</span>
+          </button>
         </div>
       </section>
 
       {/* slider 1 */}
-      <div
-        className={`fixed inset-0 bg-white text-black transform transition-transform duration-500 z-50 overflow-y-auto ${activeSection === 1 ? 'translate-x-0' : 'translate-x-full'
-          }`}
-      >
-        <button
-          onClick={() => setActiveSection(null)}
-          className="absolute top-6 right-6 text-2xl"
-        >
+      <div className={
+        `fixed inset-0 bg-white text-black transform transition-transform duration-500 z-50 overflow-y-auto 
+        ${activeSection === 1 ? 'translate-x-0' : 'translate-x-full'}`
+      }>
+        <button onClick={() => setActiveSection(null)}
+          className="absolute top-6 right-6 text-2xl">
           <X size={32} />
         </button>
         <div className="p-6 md:p-12 space-y-8 max-w-3xl mx-auto">
-          <h2 className="text-4xl font-bold">Discovery</h2>
+          <h2 className="text-4xl font-bold">Über Uns</h2>
           <p className="text-lg leading-relaxed">Lots of details here...</p>
         </div>
       </div>
 
       {/* section 2 */}
-      <section
-        id="section2"
-        className="min-h-screen flex flex-col py-16 md:py-48 px-6 md:ml-28 relative text-center md:text-left"
-      >
-        <div className="flex flex-col md:flex-row items-center md:items-baseline gap-6 md:gap-12">
-          <div className="flex flex-row items-baseline gap-3">
-            <span className="no">2</span>
-            <div className="rounded-full bg-white h-12 w-12 md:h-14 md:w-14"></div>
-          </div>
-
-          <div className="flex flex-col max-w-md md:max-w-2xl">
-            <div className="flex flex-col md:flex-row md:items-center items-center gap-4 justify-center">
-              <h2 className="header">Social Proof</h2>
-              <button
-                onClick={() => setActiveSection(2)}
-                className="mt-4 md:mt-0 md:ml-4 flex items-center justify-start md:justify-center gap-2 
-                w-[80vw] md:w-[44px] h-[40px] md:h-[44px] rounded-full 
-                bg-white text-black font-medium hover:bg-gray-200 transition px-4 md:px-0 min-w-[44px] md:min-w-[44px]">
-                <ArrowRight size={20} className="flex-shrink-0" />
-              </button>
-            </div>
-            <p className="paragraph">You deep dive into our past Projects and get to know us.</p>
+      <section id="section2" className="h-screen flex items-center justify-center text-center px-6 relative overflow-hidden">
+        <div className="flex-row flex self-center w-2/3">
+          <div className='flex flex-col items-end md:items-start justify-start  pl-14 gap-3'>
+            <h1 className="header">Leistungen</h1>
+            <button onClick={() => setActiveSection(2)}
+              className="px-5 py-2 bg-white/10 backdrop-blur-xl border border-white/20 rounded-full text-white flex items-center gap-2 hover:bg-white/20 transition">
+              Stöbere durch unsere Projekte
+              <span className="text-xl">→</span>
+            </button>
           </div>
         </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
+          <div className='px-5 py-4 flex flex-col bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl text-white items-center gap-2 hover:bg-white/20 transition'>
+            <h2 className='text-2xl'>Design</h2>
+            <p>Wir designen die Webside auf ihren Wunsch, Designrevisionen und Überarbeitung bla bla bla, Lorem Ipusm Dolores, isem artos, abrb garb</p>
+          </div>
+
+          <div className='px-5 py-4 flex flex-col bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl text-white items-center gap-2 hover:bg-white/20 transition'>
+            <h2 className='text-2xl'>Design</h2>
+            <p>Wir designen die Webside auf ihren Wunsch, Designrevisionen und Überarbeitung bla bla bla, Lorem Ipusm Dolores, isem artos, abrb garb</p>
+          </div>
+
+          <div className='px-5 py-4 flex flex-col bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl text-white items-center gap-2 hover:bg-white/20 transition'>
+            <h2 className='text-2xl'>Design</h2>
+            <p>Wir designen die Webside auf ihren Wunsch, Designrevisionen und Überarbeitung bla bla bla, Lorem Ipusm Dolores, isem artos, abrb garb</p>
+          </div>
+
+          <div className='px-5 py-4 flex flex-col bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl text-white items-center gap-2 hover:bg-white/20 transition'>
+            <h2 className='text-2xl'>Design</h2>
+            <p>Wir designen die Webside auf ihren Wunsch, Designrevisionen und Überarbeitung bla bla bla, Lorem Ipusm Dolores, isem artos, abrb garb</p>
+          </div>
+        </div>
+
       </section>
 
       {/* slider 2 */}
@@ -176,40 +178,24 @@ export default function Home() {
       >
         <button
           onClick={() => setActiveSection(null)}
-          className="absolute top-6 right-6 text-2xl"        >
+          className="absolute top-6 right-6 text-2xl">
           <X size={32} />
         </button>
         <div className="p-6 md:p-12 space-y-8 max-w-3xl mx-auto">
-          <h2 className="text-4xl font-bold">More about Social Proof</h2>
+          <h2 className="text-4xl font-bold">Leistungen</h2>
           <p className="text-lg leading-relaxed">Lots of details here...</p>
         </div>
       </div>
 
       {/* section 3 */}
-      <section
-        id="section3"
-        className="min-h-screen flex flex-col py-16 md:py-48 px-6 md:ml-28 relative text-center md:text-left"
-      >
-        <div className="flex flex-col md:flex-row items-center md:items-baseline gap-6 md:gap-12">
-          <div className="flex flex-row items-baseline gap-3">
-            <span className="no">3</span>
-            <div className="rounded-full bg-white h-12 w-12 md:h-14 md:w-14"></div>
-          </div>
-
-          <div className="flex flex-col max-w-md md:max-w-2xl">
-            <div className="flex flex-col md:flex-row md:items-center gap-4 justify-center md:justify-start">
-              <h2 className="header">Value</h2>
-              <button
-                onClick={() => setActiveSection(3)}
-                className="mt-4 md:mt-0 md:ml-4 flex items-center justify-start md:justify-center gap-2 
-                w-[80vw] md:w-[44px] h-[40px] md:h-[44px] rounded-full 
-                bg-white text-black font-medium hover:bg-gray-200 transition px-4 md:px-0 min-w-[44px] md:min-w-[44px]"
-              >
-                <ArrowRight size={22} className="md:size-7" />
-              </button>
-            </div>
-            <p className="paragraph">Our Work for you.</p>
-          </div>
+      <section id="section3" className="h-screen flex flex-col items-center justify-center text-center px-6 relative overflow-hidden">
+        <div className="flex flex-row md:flex-col items-end md:items-start justify-start self-start w-2/3 pl-14 gap-3">
+          <h1 className="header">Oft gestellte Fragen</h1>
+          <button onClick={() => setActiveSection(3)}
+            className="px-5 py-2 bg-white/10 backdrop-blur-xl border border-white/20 rounded-full text-white flex items-center gap-2 hover:bg-white/20 transition">
+            Stöbere durch unsere Projekte
+            <span className="text-xl">→</span>
+          </button>
         </div>
       </section>
 
@@ -226,7 +212,7 @@ export default function Home() {
         </button>
 
         <div className="p-6 md:p-12 space-y-8 max-w-3xl mx-auto">
-          <h2 className="text-4xl font-bold">Value</h2>
+          <h2 className="text-4xl font-bold">Oft gestellte Fragen</h2>
           <p className="text-lg leading-relaxed">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores
             natus tempora sed consequuntur molestias amet saepe quibusdam.
@@ -235,30 +221,14 @@ export default function Home() {
       </div>
 
       {/* section 4 */}
-      <section
-        id="section4"
-        className="min-h-screen flex flex-col py-16 md:py-48 px-6 md:ml-28 relative text-center md:text-left"
-      >
-        <div className="flex flex-col md:flex-row items-center md:items-baseline gap-6 md:gap-12">
-          <div className="flex flex-row items-baseline gap-3">
-            <span className="no">4</span>
-            <div className="rounded-full bg-white h-12 w-12 md:h-14 md:w-14"></div>
-          </div>
-
-          <div className="flex flex-col max-w-md md:max-w-2xl">
-            <div className="flex flex-col md:flex-row md:items-center gap-4 justify-center md:justify-start">
-              <h2 className="header">Closing</h2>
-              <button
-                onClick={() => setActiveSection(4)}
-                className="mt-4 md:mt-0 md:ml-4 flex items-center justify-start md:justify-center gap-2 
-                w-[80vw] md:w-[44px] h-[40px] md:h-[44px] rounded-full 
-                bg-white text-black font-medium hover:bg-gray-200 transition px-4 md:px-0 min-w-[44px] md:min-w-[44px]"
-              >
-                <ArrowRight size={22} className="md:size-7" />
-              </button>
-            </div>
-            <p className="paragraph">Your product.</p>
-          </div>
+      <section id="section4" className="h-screen flex flex-col items-center justify-center text-center px-6 relative overflow-hidden">
+        <div className="flex flex-row md:flex-col items-end md:items-start justify-start self-start w-2/3 pl-14 gap-3">
+          <h1 className="header">Refernzen</h1>
+          <button onClick={() => setActiveSection(4)}
+            className="px-5 py-2 bg-white/10 backdrop-blur-xl border border-white/20 rounded-full text-white flex items-center gap-2 hover:bg-white/20 transition">
+            Stöbere durch unsere Projekte
+            <span className="text-xl">→</span>
+          </button>
         </div>
       </section>
 
@@ -275,7 +245,7 @@ export default function Home() {
         </button>
 
         <div className="p-6 md:p-12 space-y-8 max-w-3xl mx-auto">
-          <h2 className="text-4xl font-bold">Closing</h2>
+          <h2 className="text-4xl font-bold">Refernzen</h2>
           <p className="text-lg leading-relaxed">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores
             natus tempora sed consequuntur molestias amet saepe quibusdam.
