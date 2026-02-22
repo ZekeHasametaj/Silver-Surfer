@@ -1,25 +1,5 @@
-const reveals = document.querySelectorAll('.reveal');
-const io = new IntersectionObserver((entries)=>{
-  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('show'); } });
-},{threshold:0.18});
-reveals.forEach(r=>io.observe(r));
-
-const counters = document.querySelectorAll('.count');
-const cIo = new IntersectionObserver((entries)=>{
-  entries.forEach(entry=>{
-    if(!entry.isIntersecting) return;
-    const el = entry.target;
-    const target = +el.dataset.target;
-    let current = 0;
-    const step = Math.max(1, Math.floor(target / 70));
-    const tick = () => {
-      current += step;
-      if(current >= target){ el.textContent = target.toLocaleString('de-CH'); return; }
-      el.textContent = current.toLocaleString('de-CH');
-      requestAnimationFrame(tick);
-    };
-    tick();
-    cIo.unobserve(el);
-  })
-},{threshold:0.5});
-counters.forEach(c=>cIo.observe(c));
+const i18n={de:{nav_home:'Home',nav_usecases:'Use Cases',nav_about:'Über uns',nav_team:'Team',nav_faq:'FAQ',nav_contact:'Kontakt',cta:'Call buchen',hero_tag:'AI PHONE & FRONTDESK AGENTS',hero_title_a:'Verwandle',hero_title_b:'verpasste Anrufe',hero_title_c:'in gebuchte Termine.',hero_sub:'Wir bauen KI-gestützte Voice- und Frontdesk-Systeme für Unternehmen, die zuverlässig mehr Leads, bessere Erreichbarkeit und weniger manuellen Aufwand wollen.',hero_btn1:'Kostenlose Demo anfragen',hero_btn2:'Use Cases ansehen',s1_title:'Was macht Silver Surfer anders?',s1_c1_t:'Conversion-first',s1_c1_d:'Jeder Flow ist auf Terminbuchungen und qualifizierte Leads optimiert.',s1_c2_t:'Sicher & kontrolliert',s1_c2_d:'Klare Eskalationen, Rollenrechte, Auditierbarkeit und saubere Integrationen.',s1_c3_t:'Schnelle Umsetzung',s1_c3_d:'Vom Discovery-Call bis zum Pilot typischerweise in 7–14 Tagen.',s2_title:'Beliebte Branchen',u_med:'Arztpraxen & Kliniken',u_real:'Immobilien',u_trade:'Handwerk & Services',u_law:'Kanzleien',u_more:'Alle Use Cases',about_t:'Über uns',about_p:'Silver Surfer ist ein AI-Execution-Team aus Zürich. Wir setzen Voice- und Frontdesk-Agenten in reale Geschäftsprozesse um – mit klarem Fokus auf Ergebnis, Qualität und Zuverlässigkeit.',team_t:'Team',team_r1:'Co-Founder · Growth',team_r2:'Co-Founder · Delivery',team_r3:'AI Operator · Build',faq_t:'FAQ',faq_q1:'Wie schnell startet ein Pilot?',faq_a1:'In der Regel innerhalb von 7–14 Tagen, abhängig von Integrationen und Freigaben.',faq_q2:'Kann der Agent an Mitarbeiter übergeben?',faq_a2:'Ja. Wir definieren klare Eskalationsregeln für Sonderfälle und sensible Themen.',faq_q3:'Unterstützt ihr mehrere Sprachen?',faq_a3:'Ja, Deutsch und Englisch sind standardmäßig möglich.',contact_t:'Kontakt',contact_p:'Bereit für eine Demo? Schreib uns für ein kurzes Strategiegespräch.',use_t:'Use Cases',use_p:'Branchenlösungen mit eigenen Abläufen, KPIs und Eskalationslogik.',footer:'Silver Surfer • AI Frontdesk Systems'},en:{nav_home:'Home',nav_usecases:'Use Cases',nav_about:'About',nav_team:'Team',nav_faq:'FAQ',nav_contact:'Contact',cta:'Book a call',hero_tag:'AI PHONE & FRONTDESK AGENTS',hero_title_a:'Turn',hero_title_b:'missed calls',hero_title_c:'into booked appointments.',hero_sub:'We build AI-powered voice and frontdesk systems for companies that want more qualified leads, better availability, and less manual workload.',hero_btn1:'Request free demo',hero_btn2:'View use cases',s1_title:'What makes Silver Surfer different?',s1_c1_t:'Conversion-first',s1_c1_d:'Every flow is optimized for booked appointments and qualified leads.',s1_c2_t:'Secure & controlled',s1_c2_d:'Clear escalations, role-based access, auditability, and clean integrations.',s1_c3_t:'Fast execution',s1_c3_d:'From discovery call to pilot usually within 7–14 days.',s2_title:'Popular industries',u_med:'Medical & Clinics',u_real:'Real Estate',u_trade:'Trades & Home Services',u_law:'Law Firms',u_more:'All use cases',about_t:'About',about_p:'Silver Surfer is an AI execution team based in Zurich. We deploy voice and frontdesk agents into real business operations with a clear focus on outcomes, quality, and reliability.',team_t:'Team',team_r1:'Co-Founder · Growth',team_r2:'Co-Founder · Delivery',team_r3:'AI Operator · Build',faq_t:'FAQ',faq_q1:'How fast can we launch a pilot?',faq_a1:'Usually within 7–14 days, depending on integrations and approvals.',faq_q2:'Can the agent hand over to staff?',faq_a2:'Yes. We define clear escalation rules for edge cases and sensitive topics.',faq_q3:'Do you support multiple languages?',faq_a3:'Yes, German and English are supported by default.',contact_t:'Contact',contact_p:'Ready for a demo? Reach out for a short strategy call.',use_t:'Use Cases',use_p:'Industry solutions with dedicated workflows, KPIs, and escalation logic.',footer:'Silver Surfer • AI Frontdesk Systems'}};
+function applyLang(lang){localStorage.setItem('lang',lang);document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.dataset.i18n;const txt=i18n[lang]?.[k];if(txt)el.textContent=txt;});document.querySelectorAll('.lang button').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));}
+function init(){const lang=localStorage.getItem('lang')||'de';applyLang(lang);document.querySelectorAll('.lang button').forEach(b=>b.onclick=()=>applyLang(b.dataset.lang));const m=document.getElementById('mobileMenu');const t=document.getElementById('menuToggle');if(m&&t){t.onclick=()=>m.classList.toggle('open');m.querySelectorAll('a').forEach(a=>a.onclick=()=>m.classList.remove('open'));}
+const io=new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting&&e.target.classList.add('show')),{threshold:.12});document.querySelectorAll('.reveal').forEach(el=>io.observe(el));}
+window.addEventListener('DOMContentLoaded',init);
