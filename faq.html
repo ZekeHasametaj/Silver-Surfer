@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="de" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ | Silver Surfer</title>
+    <meta name="description" content="KI FAQ für Lead-Generierung, Cold Outreach und Vertriebsautomatisierung in der Schweiz.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        primary: { 400: '#38bdf8', 500: '#0ea5e9', 600: '#0284c7' },
+                        silver: { 300: '#cbd5e1', 400: '#94a3b8', 500: '#64748b', 600: '#475569', 700: '#334155', 800: '#1e293b', 900: '#0f172a', 950: '#020617' }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .glass { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .glass-dark { background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.05); }
+        .gradient-text { background: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #c084fc 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .btn-primary { background: linear-gradient(135deg, #0ea5e9 0%, #6366f1 100%); transition: all 0.3s ease; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 40px -10px rgba(14, 165, 233, 0.5); }
+        .card-hover { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .card-hover:hover { transform: translateY(-8px); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
+        .section-fade { opacity: 0; transform: translateY(30px); }
+    </style>
+</head>
+<body class="bg-silver-950 text-white overflow-x-hidden">
+    
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500 opacity-0 -translate-y-full">
+        <div class="glass-dark mx-4 mt-4 rounded-2xl px-6 py-4">
+            <div class="max-w-7xl mx-auto flex items-center justify-between">
+                <a href="index.html" class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-400 to-purple-500 flex items-center justify-center">
+                        <i data-lucide="zap" class="w-5 h-5 text-white"></i>
+                    </div>
+                    <span class="text-xl font-bold">Silver Surfer</span>
+                </a>
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="index.html" class="text-silver-300 hover:text-white transition-colors">Home</a>
+                    <a href="leistungen.html" class="text-silver-300 hover:text-white transition-colors">Agenten</a>
+                    <a href="ueber-uns.html" class="text-silver-300 hover:text-white transition-colors">Über uns</a>
+                    <a href="kontakt.html" class="btn-primary px-6 py-2.5 rounded-xl font-medium text-sm">Demo buchen</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center pt-20">
+        <div class="absolute inset-0 bg-gradient-to-b from-primary-950/30 via-silver-950 to-silver-950"></div>
+        
+        <div class="relative z-10 max-w-7xl mx-auto px-6 py-32 text-center">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-8 opacity-0" id="hero-badge">
+                <i data-lucide="trending-up" class="w-4 h-4 text-primary-400"></i>
+                <span class="text-sm text-silver-300">FAQ</span>
+            </div>
+            
+            <h1 class="text-5xl md:text-7xl font-bold mb-8 leading-tight">
+                <span class="block" id="hero-title-1">Häufige Fragen</span>
+                <span class="block gradient-text" id="hero-title-2">KI FAQ</span>
+            </h1>
+            
+            <p class="text-xl md:text-2xl text-silver-400 max-w-3xl mx-auto mb-12 opacity-0" id="hero-subtitle">
+                Lead-Generierung, Cold Outreach, personalisierte LinkedIn-Nachrichten und skalierbare Vertriebsprozesse für die Schweiz.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 opacity-0" id="hero-cta">
+                <a href="#contact" class="btn-primary px-8 py-4 rounded-2xl font-semibold text-lg">Demo buchen</a>
+                <a href="leistungen.html" class="px-8 py-4 rounded-2xl font-semibold text-lg glass hover:bg-white/10 transition-all">Alle Agenten</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-20 relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div class="glass rounded-2xl p-6 text-center section-fade">
+                    <div class="text-4xl font-bold gradient-text mb-2">Mehr</div>
+                    <div class="text-silver-400 text-sm">qualifizierte Gespräche</div>
+                </div>
+                <div class="glass rounded-2xl p-6 text-center section-fade">
+                    <div class="text-4xl font-bold gradient-text mb-2">1x</div>
+                    <div class="text-silver-400 text-sm">Zielgruppe definieren</div>
+                </div>
+                <div class="glass rounded-2xl p-6 text-center section-fade">
+                    <div class="text-4xl font-bold gradient-text mb-2">24/7</div>
+                    <div class="text-silver-400 text-sm">Follow-up Automatisierung</div>
+                </div>
+                <div class="glass rounded-2xl p-6 text-center section-fade">
+                    <div class="text-4xl font-bold gradient-text mb-2">Weniger</div>
+                    <div class="text-silver-400 text-sm">manueller Aufwand</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-32 relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-20 section-fade">
+                <span class="text-primary-400 font-semibold text-sm uppercase tracking-wider">Funktionen</span>
+                <h2 class="text-4xl md:text-5xl font-bold mt-4 mb-6">Vertrieb neu definiert</h2>
+                <p class="text-silver-400 text-xl max-w-2xl mx-auto">Der FAQ macht Ihren Vertriebsprozess sauberer, konstanter und skalierbarer.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="glass rounded-3xl p-8 card-hover section-fade">
+                    <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center mb-6">
+                        <i data-lucide="target" class="w-7 h-7 text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Zielgruppen finden</h3>
+                    <p class="text-silver-400">Der FAQ identifiziert passende Kontakte und unterstützt bei einem sauberen Start in den Outreach.</p>
+                </div>
+                
+                <div class="glass rounded-3xl p-8 card-hover section-fade">
+                    <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center mb-6">
+                        <i data-lucide="mail" class="w-7 h-7 text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Cold Outreach starten</h3>
+                    <p class="text-silver-400">Der Agent schreibt direkte LinkedIn-Nachrichten und E-Mails, die auf den einzelnen Kontakt angepasst sind.</p>
+                </div>
+                
+                <div class="glass rounded-3xl p-8 card-hover section-fade">
+                    <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-red-500 to-pink-600 flex items-center justify-center mb-6">
+                        <i data-lucide="refresh-cw" class="w-7 h-7 text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Follow-ups automatisieren</h3>
+                    <p class="text-silver-400">Nachfassen passiert konsistent, ohne dass Ihr Team jede Erinnerung und Sequenz selbst steuern muss.</p>
+                </div>
+                
+                <div class="glass rounded-3xl p-8 card-hover section-fade">
+                    <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-pink-500 to-purple-600 flex items-center justify-center mb-6">
+                        <i data-lucide="check-circle" class="w-7 h-7 text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Leads qualifizieren</h3>
+                    <p class="text-silver-400">Ihr Vertrieb bekommt weniger Streuverlust und mehr echte Gespräche mit relevanten Kontakten.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Use Cases Section -->
+    <section class="py-32 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-silver-950 via-amber-950/10 to-silver-950"></div>
+        
+        <div class="relative max-w-7xl mx-auto px-6">
+            <div class="text-center mb-20 section-fade">
+                <span class="text-primary-400 font-semibold text-sm uppercase tracking-wider">Anwendungsfälle</span>
+                <h2 class="text-4xl md:text-5xl font-bold mt-4 mb-6">Für wen ist der FAQ?</h2>
+            </div>
+            
+            <div class="space-y-8">
+                <div class="glass rounded-3xl p-8 md:p-10 section-fade">
+                    <div class="flex flex-col md:flex-row gap-8 items-start">
+                        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center shrink-0">
+                            <i data-lucide="building-2" class="w-8 h-8 text-white"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold mb-3">B2B-Dienstleister</h3>
+                            <p class="text-silver-400 text-lg">Agenturen, Beratungen und Dienstleister, die neue Mandanten gewinnen wollen, ohne den gesamten Tag mit Outreach zu verbringen.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="glass rounded-3xl p-8 md:p-10 section-fade">
+                    <div class="flex flex-col md:flex-row gap-8 items-start">
+                        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center shrink-0">
+                            <i data-lucide="rocket" class="w-8 h-8 text-white"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold mb-3">Startups & Scale-ups</h3>
+                            <p class="text-silver-400 text-lg">Wachstumsorientierte Unternehmen, die schnell skalieren wollen und dafür einen konstanten Strom an qualifizierten Leads brauchen.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="glass rounded-3xl p-8 md:p-10 section-fade">
+                    <div class="flex flex-col md:flex-row gap-8 items-start">
+                        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-red-500 to-pink-600 flex items-center justify-center shrink-0">
+                            <i data-lucide="users" class="w-8 h-8 text-white"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold mb-3">Vertriebsteams</h3>
+                            <p class="text-silver-400 text-lg">Sales-Teams, die ihre Zeit effizienter nutzen wollen und sich auf Closing konzentrieren möchten statt auf manuelles Prospecting.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="contact" class="py-32 relative">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <div class="glass rounded-3xl p-12 section-fade">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">Bereit für mehr Leads?</h2>
+                <p class="text-silver-400 text-xl mb-8">Vereinbaren Sie ein kostenloses Erstgespräch und erfahren Sie, wie der FAQ Ihren Vertrieb transformieren kann.</p>
+                <a href="kontakt.html" class="btn-primary px-8 py-4 rounded-2xl font-semibold text-lg inline-flex items-center gap-2">
+                    <span>Demo buchen</span>
+                    <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 border-t border-silver-800">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-400 to-purple-500 flex items-center justify-center">
+                        <i data-lucide="zap" class="w-5 h-5 text-white"></i>
+                    </div>
+                    <span class="text-xl font-bold">Silver Surfer</span>
+                </div>
+                <p class="text-silver-400 text-sm">© 2026 Silver Surfer. Alle Rechte vorbehalten.</p>
+                <div class="flex items-center gap-4">
+                    <a href="#" class="text-silver-400 hover:text-white transition-colors"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // Navbar animation
+        gsap.to('#navbar', { opacity: 1, y: 0, duration: 0.8, delay: 0.5, ease: 'power3.out' });
+        
+        // Hero animations
+        gsap.to('#hero-badge', { opacity: 1, y: 0, duration: 0.8, delay: 0.3, ease: 'power3.out' });
+        gsap.from('#hero-title-1', { opacity: 0, y: 50, duration: 1, delay: 0.5, ease: 'power3.out' });
+        gsap.from('#hero-title-2', { opacity: 0, y: 50, duration: 1, delay: 0.7, ease: 'power3.out' });
+        gsap.to('#hero-subtitle', { opacity: 1, y: 0, duration: 0.8, delay: 0.9, ease: 'power3.out' });
+        gsap.to('#hero-cta', { opacity: 1, y: 0, duration: 0.8, delay: 1.1, ease: 'power3.out' });
+        
+        // Section fade animations
+        gsap.utils.toArray('.section-fade').forEach(section => {
+            gsap.to(section, {
+                scrollTrigger: { trigger: section, start: 'top 80%', toggleActions: 'play none none reverse' },
+                opacity: 1, y: 0, duration: 0.8, ease: 'power3.out'
+            });
+        });
+    </script>
+</body>
+</html>
