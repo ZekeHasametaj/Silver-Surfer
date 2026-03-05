@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="de" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Executive Agent für Führungskräfte Schweiz | Silver Surfer</title>
+    <meta name="description" content="Der Executive Agent von Silver Surfer ist Ihr digitaler Assistent für Inbox, Prioritäten, Termine und Briefings. Für Führungskräfte in der Schweiz.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                            950: '#082f49',
+                        },
+                        silver: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            200: '#e2e8f0',
+                            300: '#cbd5e1',
+                            400: '#94a3b8',
+                            500: '#64748b',
+                            600: '#475569',
+                            700: '#334155',
+                            800: '#1e293b',
+                            900: '#0f172a',
+                            950: '#020617',
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'gradient': 'gradient 8s linear infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        gradient: {
+                            '0%, 100%': { backgroundPosition: '0% 50%' },
+                            '50%': { backgroundPosition: '100% 50%' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .glass-dark {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #c084fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .gradient-border {
+            position: relative;
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.1), rgba(192, 132, 252, 0.1));
+            border-radius: 1rem;
+        }
+        
+        .gradient-border::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 1rem;
+            padding: 1px;
+            background: linear-gradient(135deg, #38bdf8, #818cf8, #c084fc);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+        }
+        
+        .card-hover {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #0ea5e9 0%, #6366f1 100%);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px -10px rgba(14, 165, 233, 0.5);
+        }
+        
+        .section-fade {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .faq-item {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+        }
+        
+        .faq-toggle span:last-child {
+            transition: transform 0.3s ease;
+        }
+        
+        .faq-item.active .faq-toggle span:last-child {
+            transform: rotate(90deg);
+        }
+        
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+    </style>
+</head>
+<body class="bg-silver-950 text-white overflow-x-hidden">
+    
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500 opacity-0 -translate-y-full">
+        <div class="glass-dark mx-4 mt-4 rounded-2xl px-6 py-4">
+            <div class="max-w-7xl mx-auto flex items-center justify-between">
+                <a href="index.html" class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-400 to-purple-500 flex items-center justify-center">
+                        <i data-lucide="zap" class="w-5 h-5 text-white"></i>
+                    </div>
+                    <span class="text-xl font-bold">Silver Surfer</span>
+                </a>
+                
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="leistungen.html" class="text-silver-300 hover:text-white transition-colors">KI-Agenten</a>
+                    <a href="ablauf.html" class="text-silver-300 hover:text-white transition-colors">Ablauf</a>
+                    <a href="ueber-uns.html" class="text-silver-300 hover:text-white transition-colors">Über uns</a>
+                    <a href="faq.html" class="text-silver-300 hover:text-white transition-colors">FAQ</a>
+                    <a href="kontakt.html" class="text-silver-300 hover:text-white transition-colors">Kontakt</a>
+                </div>
+                
+                <a href="kontakt.html" class="btn-primary px-6 py-2.5 rounded-xl font-medium text-sm">
+                    Demo buchen
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-[70vh] flex items-center justify-center overflow-hidden pt-32 pb-20">
+        <div class="absolute inset-0 bg-gradient-to-b from-purple-950/30 via-silver-950 to-silver-950"></div>
+        
+        <div class="relative z-10 max-w-7xl mx-auto px-6 text-center">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-8 section-fade">
+                <i data-lucide="crown" class="w-4 h-4 text-purple-400"></i>
+                <span class="text-sm text-silver-300">Executive Agent</span>
+            </div>
+            
+            <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight section-fade">
+                Ihr digitaler Assistent<br><span class="gradient-text">für Fokus und Prioritäten.</span>
+            </h1>
+            
+            <p class="text-xl md:text-2xl text-silver-400 max-w-3xl mx-auto mb-12 section-fade">
+                Der Executive Agent ist Ihr persönlicher KI-Agent für Führungskräfte: per Call erreichbar, mit Zugriff auf Ihren Kalender, laufende Themen und die Systeme, die Sie im Alltag wirklich nutzen.
+            </p>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-20 relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="glass rounded-2xl p-6 text-center section-fade">
+                    <div class="text-4xl md:text-5xl font-bold gradient-text mb-2">1x</div>
+                    <p class="text-silver-400 text-sm">Klarer Tagesüberblick statt Einzelinfos</p>
+                </div>
+                <div class="glass rounded-2xl p-6 text-center section-fade">
+                    <div class="text-4xl md:text-5xl font-bold gradient-text mb-2">24/7</div>
+                    <p class="text-silver-400 text-sm">Unterstützung für Vorbereitung und Struktur</p>
+                </div>
+                <div class="glass rounded-2xl p-6 text-center section-fade">
+                    <div class="text-4xl md:text-5xl font-bold gradient-text mb-2">Mehr</div>
+                    <p class="text-silver-400 text-sm">Fokus auf Entscheidungen und Führung</p>
+                </div>
+                <div class="glass rounded-2xl p-6 text-center section-fade">
+                    <div class="text-4xl md:text-5xl font-bold gradient-text mb-2">Weniger</div>
+                    <p class="text-silver-400 text-sm">Kontextwechsel im Alltag</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-32 relative">
+        <div class="absolute inset-0 bg-gradient-to-b from-silver-950 via-purple-950/10 to-silver-950"></div>
+        <div class="relative max-w-7xl mx-auto px-6">
+            <div class="text-center mb-20 section-fade">
+                <span class="text-primary-400 font-semibold text-sm uppercase tracking-wider">Im Alltag</span>
+                <h2 class="text-4xl md:text-5xl font-bold mt-4 mb-6">Weniger Kontextwechsel, <span class="gradient-text">mehr Überblick.</span></h2>
+                <p class="text-silver-400 text-xl max-w-2xl mx-auto">
+                    Der Executive Agent bündelt die Dinge, die Führungskräfte verlangsamen: zu viele Informationen, zu wenig Struktur und ständige Unterbrechungen.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="glass rounded-3xl p-8 card-hover section-fade">
+                    <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center mb-6">
+                        <i data-lucide="phone" class="w-7 h-7 text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Per Call erreichbar</h3>
+                    <p class="text-silver-400">Sie können den Agent direkt anrufen und ihn in Echtzeit nach Ihrem Tag, Prioritäten oder offenen Punkten fragen.</p>
+                </div>
+                
+                <div class="glass rounded-3xl p-8 card-hover section-fade">
+                    <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-600 flex items-center justify-center mb-6">
+                        <i data-lucide="calendar" class="w-7 h-7 text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Kalender & Tagesüberblick</h3>
+                    <p class="text-silver-400">Er beantwortet Fragen wie: Was kommt heute, welche Termine stehen an, was ist als Nächstes wichtig und kann Termine bei Bedarf auch planen oder verschieben.</p>
+                </div>
+                
+                <div class="glass rounded-3xl p-8 card-hover section-fade">
+                    <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center mb-6">
+                        <i data-lucide="folder-open" class="w-7 h-7 text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Zugriff auf laufende Themen</h3>
+                    <p class="text-silver-400">Wenn Sie ihm Zugriff geben, kann er zu laufenden Aufgaben, offenen Punkten und relevanten Vorgängen direkt Auskunft geben.</p>
+                </div>
+                
+                <div class="glass rounded-3xl p-8 card-hover section-fade">
+                    <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center mb-6">
+                        <i data-lucide="zap" class="w-7 h-7 text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Direkt etwas ausführen</h3>
+                    <p class="text-silver-400">Er kann nicht nur informieren, sondern Aufgaben anstoßen - zum Beispiel Angebote vorbereiten oder direkt erstellen, wenn Sie es per Call beauftragen.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="py-32 relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-20 section-fade">
+                <span class="text-primary-400 font-semibold text-sm uppercase tracking-wider">Nutzen</span>
+                <h2 class="text-4xl md:text-5xl font-bold mt-4 mb-6">Ein Assistent für <span class="gradient-text">Tempo, Klarheit und Priorität.</span></h2>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="gradient-border p-8 rounded-2xl card-hover section-fade">
+                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center mb-6">
+                        <i data-lucide="user" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Ein Agent auf Abruf</h3>
+                    <p class="text-silver-400">Statt selbst Systeme zu öffnen, fragen Sie den Agent direkt und erhalten sofort eine verwertbare Antwort.</p>
+                    <span class="inline-block mt-4 px-3 py-1 rounded-full bg-purple-500/20 text-purple-300 text-sm">Schneller im Alltag</span>
+                </div>
+                
+                <div class="gradient-border p-8 rounded-2xl card-hover section-fade">
+                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-600 flex items-center justify-center mb-6">
+                        <i data-lucide="focus" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Weniger Kontextwechsel</h3>
+                    <p class="text-silver-400">Kalender, laufende Themen, offene Punkte oder vorbereitende Aufgaben werden gebündelt statt aus mehreren Tools zusammengesucht.</p>
+                    <span class="inline-block mt-4 px-3 py-1 rounded-full bg-blue-500/20 text-blue-300 text-sm">Mehr Fokus</span>
+                </div>
+                
+                <div class="gradient-border p-8 rounded-2xl card-hover section-fade">
+                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center mb-6">
+                        <i data-lucide="rocket" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Mehr direkte Umsetzung</h3>
+                    <p class="text-silver-400">Wenn Sie etwas brauchen, kann der Agent Vorarbeit direkt starten - von der Struktur bis zum ersten Entwurf.</p>
+                    <span class="inline-block mt-4 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-sm">Vom Fragen ins Handeln</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Detailed Features Section -->
+    <section class="py-32 relative">
+        <div class="absolute inset-0 bg-gradient-to-b from-silver-950 via-purple-950/10 to-silver-950"></div>
+        <div class="relative max-w-7xl mx-auto px-6">
+            <div class="text-center mb-20 section-fade">
+                <span class="text-primary-400 font-semibold text-sm uppercase tracking-wider">Im Detail</span>
+                <h2 class="text-4xl md:text-5xl font-bold mt-4 mb-6">Was der Executive Agent <span class="gradient-text">konkret unterstützt.</span></h2>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="glass rounded-3xl p-8 card-hover section-fade">
+                    <h3 class="text-2xl font-bold mb-6 flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center">
+                            <i data-lucide="user-check" class="w-5 h-5 text-white"></i>
+                        </div>
+                        Persönlicher Daily Agent
+                    </h3>
+                    <p class="text-silver-400 mb-6">Sie sprechen mit dem Agent wie mit einem persönlichen Assistenten, der Ihren Tag kennt.</p>
+                    <ul class="space-y-4">
+                        <li class="flex items-start gap-3 text-silver-300">
+                            <i data-lucide="check-circle" class="w-5 h-5 text-purple-400 mt-0.5 shrink-0"></i>
+                            <span>Per Call nach dem Tagesplan fragen</span>
+                        </li>
+                        <li class="flex items-start gap-3 text-silver-300">
+                            <i data-lucide="check-circle" class="w-5 h-5 text-purple-400 mt-0.5 shrink-0"></i>
+                            <span>Kalender, Termine und Prioritäten abrufen</span>
+                        </li>
+                        <li class="flex items-start gap-3 text-silver-300">
+                            <i data-lucide="check-circle" class="w-5 h-5 text-purple-400 mt-0.5 shrink-0"></i>
+                            <span>Meetings vorbereiten und vorplanen</span>
+                        </li>
+                        <li class="flex items-start gap-3 text-silver-300">
+                            <i data-lucide="check-circle" class="w-5 h-5 text-purple-400 mt-0.5 shrink-0"></i>
+                            <span>Termine planen oder verschieben</span>
+                        </li>
+                        <li class="flex items-start gap-3 text-silver-300">
+                            <i data-lucide="check-circle" class="w-5 h-5 text-purple-400 mt-0.5 shrink-0"></i>
+                            <span>Offene Punkte und laufende Themen einordnen</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="glass rounded-3xl p-8 card-hover section-fade">
+                    <h3 class="text-2xl font-bold mb-6 flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-600 flex items-center justify-center">
+                            <i data-lucide="settings" class="w-5 h-5 text-white"></i>
+                        </div>
+                        Zugriff & Ausführung
+                    </h3>
+                    <p class="text-silver-400 mb-6">Mit dem richtigen Zugriff beantwortet der Agent nicht nur Fragen, sondern setzt Dinge direkt in Bewegung.</p>
+                    <ul class="space-y-4">
+                        <li class="flex items-start gap-3 text-silver-300">
+                            <i data-lucide="check-circle" class="w-5 h-5 text-blue-400 mt-0.5 shrink-0"></i>
+                            <span>Auf relevante Tools und Systeme zugreifen</span>
+                        </li>
+                        <li class="flex items-start gap-3 text-silver-300">
+                            <i data-lucide="check-circle" class="w-5 h-5 text-blue-400 mt-0.5 shrink-0"></i>
+                            <span>Fragen zu laufenden Vorgängen beantworten</span>
+                        </li>
+                        <li class="flex items-start gap-3 text-silver-300">
+                            <i data-lucide="check-circle" class="w-5 h-5 text-blue-400 mt-0.5 shrink-0"></i>
+                            <span>Angebote vorbereiten oder erstellen</span>
+                        </li>
+                        <li class="flex items-start gap-3 text-silver-300">
+                            <i data-lucide="check-circle" class="w-5 h-5 text-blue-400 mt-0.5 shrink-0"></i>
+                            <span>Vorarbeit direkt aus einem Call heraus starten</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-32 relative">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="text-center mb-16 section-fade">
+                <span class="text-primary-400 font-semibold text-sm uppercase tracking-wider">FAQ</span>
+                <h2 class="text-4xl md:text-5xl font-bold mt-4 mb-6">Häufige Fragen zum <span class="gradient-text">Executive Agent.</span></h2>
+            </div>
+            
+            <div class="space-y-4 section-fade">
+                <div class="faq-item glass rounded-2xl overflow-hidden active">
+                    <button class="faq-question w-full px-6 py-5 flex items-center justify-between text-left">
+                        <div class="flex items-center gap-4">
+                            <span class="text-primary-400 font-mono text-sm">01</span>
+                            <span class="font-semibold text-lg">Ist das nur für CEOs gedacht?</span>
+                        </div>
+                        <div class="faq-toggle relative w-6 h-6 flex items-center justify-center">
+                            <span class="absolute w-3 h-0.5 bg-white"></span>
+                            <span class="absolute w-0.5 h-3 bg-white"></span>
+                        </div>
+                    </button>
+                    <div class="faq-answer px-6 pb-5">
+                        <p class="text-silver-400 pl-10">Nein. Der Executive Agent ist für alle Rollen sinnvoll, die viele Informationen bündeln, priorisieren und in Entscheidungen übersetzen müssen.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item glass rounded-2xl overflow-hidden">
+                    <button class="faq-question w-full px-6 py-5 flex items-center justify-between text-left">
+                        <div class="flex items-center gap-4">
+                            <span class="text-primary-400 font-mono text-sm">02</span>
+                            <span class="font-semibold text-lg">Kann ich ihn wirklich einfach anrufen?</span>
+                        </div>
+                        <div class="faq-toggle relative w-6 h-6 flex items-center justify-center">
+                            <span class="absolute w-3 h-0.5 bg-white"></span>
+                            <span class="absolute w-0.5 h-3 bg-white"></span>
+                        </div>
+                    </button>
+                    <div class="faq-answer px-6 pb-5">
+                        <p class="text-silver-400 pl-10">Ja. Genau das ist eine Stärke des Executive Agent. Sie können ihn per Call nach Ihrem Tag, Ihrem Kalender, laufenden Themen oder konkreten Aufgaben fragen.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item glass rounded-2xl overflow-hidden">
+                    <button class="faq-question w-full px-6 py-5 flex items-center justify-between text-left">
+                        <div class="flex items-center gap-4">
+                            <span class="text-primary-400 font-mono text-sm">03</span>
+                            <span class="font-semibold text-lg">Kann er auch Termine planen oder verschieben?</span>
+                        </div>
+                        <div class="faq-toggle relative w-6 h-6 flex items-center justify-center">
+                            <span class="absolute w-3 h-0.5 bg-white"></span>
+                            <span class="absolute w-0.5 h-3 bg-white"></span>
+                        </div>
+                    </button>
+                    <div class="faq-answer px-6 pb-5">
+                        <p class="text-silver-400 pl-10">Ja. Wenn Sie ihm Zugriff geben, kann er Meetings vorplanen, Termine koordinieren und bestehende Termine auch direkt verschieben.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item glass rounded-2xl overflow-hidden">
+                    <button class="faq-question w-full px-6 py-5 flex items-center justify-between text-left">
+                        <div class="flex items-center gap-4">
+                            <span class="text-primary-400 font-mono text-sm">04</span>
+                            <span class="font-semibold text-lg">Kann er auch Dinge direkt ausführen?</span>
+                        </div>
+                        <div class="faq-toggle relative w-6 h-6 flex items-center justify-center">
+                            <span class="absolute w-3 h-0.5 bg-white"></span>
+                            <span class="absolute w-0.5 h-3 bg-white"></span>
+                        </div>
+                    </button>
+                    <div class="faq-answer px-6 pb-5">
+                        <p class="text-silver-400 pl-10">Ja. Wenn Sie ihm Zugriff geben, kann er nicht nur informieren, sondern auch Vorarbeit übernehmen - zum Beispiel Angebote vorbereiten oder direkt erstellen.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-32 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-purple-600/20 via-primary-600/20 to-pink-600/20"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-purple-500/20 rounded-full blur-[120px]"></div>
+        
+        <div class="relative max-w-4xl mx-auto px-6 text-center">
+            <div class="section-fade">
+                <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">Mehr Ruhe im <span class="gradient-text">Führungsalltag.</span></h2>
+                <p class="text-xl text-silver-400 mb-10 max-w-2xl mx-auto">Wir zeigen Ihnen, wie ein Executive Agent Fokus freimacht und Entscheidungen besser vorbereitet.</p>
+                <a href="kontakt.html" class="btn-primary inline-flex items-center gap-3 px-8 py-4 rounded-2xl font-semibold text-lg">
+                    <span>Executive Agent anfragen</span>
+                    <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 border-t border-silver-800">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-400 to-purple-500 flex items-center justify-center">
+                        <i data-lucide="zap" class="w-5 h-5 text-white"></i>
+                    </div>
+                    <span class="text-xl font-bold">Silver Surfer</span>
+                </div>
+                <div class="flex items-center gap-8 text-sm">
+                    <a href="leistungen.html" class="text-silver-400 hover:text-white transition-colors">KI-Agenten</a>
+                    <a href="ablauf.html" class="text-silver-400 hover:text-white transition-colors">Ablauf</a>
+                    <a href="ueber-uns.html" class="text-silver-400 hover:text-white transition-colors">Über uns</a>
+                    <a href="faq.html" class="text-silver-400 hover:text-white transition-colors">FAQ</a>
+                    <a href="kontakt.html" class="text-silver-400 hover:text-white transition-colors">Kontakt</a>
+                </div>
+                <p class="text-silver-500 text-sm">
+                    © 2026 Silver Surfer. Alle Rechte vorbehalten.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+</html>
